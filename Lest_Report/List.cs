@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,24 @@ namespace Lest_Report
             this.size = 0;                          // 현재 배열요소는 없기애 0으로 작성
         }
 
+        public T this[int index]                            // 배열요소에 접근 및 불러오기 가능케 하며 어떤 자료형 상관없이 일반화로 처리
+        {
+            get                                             // 배열접근
+            {
+                if (index < 0 || index >= size)             // 예외처리(배열크기에 벗어날경우)
+                    throw new IndexOutOfRangeException();
+
+                return items[index];                        // 배열요소 값 반환
+            }
+            set
+            {
+                if (index < 0 || index >= size)
+                    throw new IndexOutOfRangeException();
+
+                items[index] = value;                       // 해당 배열요소에 값 셋팅가능
+            }
+        }
+
         // 배열 허용량 확인 기능===================================================================
         public int Capacity { get { return items.Length; } }    // 배열의 허용량을 알기 위해 접근허용과 길이 값을 반환시켜주도록 함
 
@@ -32,11 +51,13 @@ namespace Lest_Report
                                                                 // 배열에 해당 변수를 넣고 크기를 후위연산자로 옆으로 한칸 옮긴다
             {
                 items[size++] = item;
+                Console.WriteLine($"리스트에{item}를(을) 추가하였습니다");
             }
             else                                                // 배열 허용량보단 배열크기가 클경우
             {
                 Exceed();                                       // 관련 함수 사용
                 items[size++] = item;                           // 배열에 요소 추가
+                Console.WriteLine($"리스트에{item}를(을) 추가하였습니다");
             }
         }
 
@@ -58,11 +79,25 @@ namespace Lest_Report
                     throw new IndexOutOfRangeException();
                 size--;                                         // 해당 배열크기 삭제
                 Array.Copy(items, index + 1, items, index, size - index);   // 삭제된 위치뒤 부터 크기까지 복사해서 삭제된 위치에 붙여둠
+                Console.WriteLine($"리스트에서{item}를(을) 삭제하였습니다");
                 return true;
             }
             else
             {
+                Console.WriteLine($"리스트에는 {item}이(가) 존재하지 않습니다");
                 return false;
+            }
+        }
+
+        public void RemoveNum(int index)
+        {
+            if (index < 0 || index >= size)                     // 배열크기에 벗어날 경우 예외처리사용
+                throw new IndexOutOfRangeException();
+            if (index >= 0)
+            {
+                size--;
+                Array.Copy(items, index + 1, items, index, size - index);
+                Console.WriteLine($"리스트에서{index}를(을) 삭제하였습니다");
             }
 
         }
@@ -99,5 +134,8 @@ namespace Lest_Report
             }
             return -1;                                           // 해당없을 경우 배열밖인 음수-1을 반환함
         }
+
+
+
     }
 }
