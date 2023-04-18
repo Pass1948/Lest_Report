@@ -134,8 +134,5 @@ namespace Lest_Report
             }
             return -1;                                           // 해당없을 경우 배열밖인 음수-1을 반환함
         }
-
-
-
     }
 }
