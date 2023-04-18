@@ -36,11 +36,5 @@
             string? findValue = list.Find(x => x.Contains('4'));
             int findIndex = list.FindIndex(x => x.Contains('1'));
         }
-
-        //기술면접=====================================
-        // 배열 :
-
-        // 선형리스트 :
-
     }
 }
